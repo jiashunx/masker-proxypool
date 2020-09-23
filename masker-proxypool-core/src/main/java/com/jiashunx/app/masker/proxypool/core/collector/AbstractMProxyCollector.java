@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
  * @author jiashunx
  * @date 2020/09/16
  */
-public abstract class AbstractProxyCollector implements IProxyCollector {
+public abstract class AbstractMProxyCollector implements IMProxyCollector {
 
-    private static final Logger logger = LoggerFactory.getLogger(AbstractProxyCollector.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractMProxyCollector.class);
 
     @Override
     public void register() {

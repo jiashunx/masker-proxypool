@@ -18,9 +18,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author jiashunx
  * @date 2020/09/15
  */
-public class UserAgentHolder {
+public class MUserAgentHolder {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserAgentHolder.class);
+    private static final Logger logger = LoggerFactory.getLogger(MUserAgentHolder.class);
 
     private static List<String> userAgentList = null;
     private static int userAgentSize = 0;
@@ -31,7 +31,7 @@ public class UserAgentHolder {
         InputStream in = null;
         BufferedReader reader = null;
         try {
-            in = UserAgentHolder.class.getClassLoader().getResourceAsStream(fileName);
+            in = MUserAgentHolder.class.getClassLoader().getResourceAsStream(fileName);
             reader = new BufferedReader(new InputStreamReader(in));
             String line = null;
             Set<String> set = new HashSet<>();
@@ -53,7 +53,7 @@ public class UserAgentHolder {
         }
     }
 
-    private UserAgentHolder() {}
+    private MUserAgentHolder() {}
 
     /**
      * 获取下一个User-Agent配置.

@@ -21,8 +21,8 @@ public class MProxyCollectScheduler implements Runnable {
         if (logger.isInfoEnabled()) {
             logger.info("采集开始");
         }
-        Map<MProxySourceType, IProxyCollector> collectorMap =  MHelper.COLLECTOR_MAP;
-        for (Map.Entry<MProxySourceType, IProxyCollector> entry: collectorMap.entrySet()) {
+        Map<MProxySourceType, IMProxyCollector> collectorMap =  MHelper.COLLECTOR_MAP;
+        for (Map.Entry<MProxySourceType, IMProxyCollector> entry: collectorMap.entrySet()) {
             if (logger.isInfoEnabled()) {
                 logger.info("开始采集: {}", entry.getKey());
             }

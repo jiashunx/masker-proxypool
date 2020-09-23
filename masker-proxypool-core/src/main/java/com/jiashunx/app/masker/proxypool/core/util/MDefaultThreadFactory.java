@@ -7,14 +7,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author jiashunx
  * @date 2020/09/20
  */
-public class DefaultThreadFactory implements ThreadFactory {
+public class MDefaultThreadFactory implements ThreadFactory {
 
     private static final AtomicInteger poolNumber = new AtomicInteger(1);
     private final ThreadGroup group;
     private final AtomicInteger threadNumber = new AtomicInteger(1);
     private final String namePrefix;
 
-    public DefaultThreadFactory() {
+    public MDefaultThreadFactory() {
         SecurityManager s = System.getSecurityManager();
         group = (s != null) ? s.getThreadGroup() :
                 Thread.currentThread().getThreadGroup();

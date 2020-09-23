@@ -1,6 +1,6 @@
 package com.jiashunx.app.masker.proxypool.core.collector.impl;
 
-import com.jiashunx.app.masker.proxypool.core.collector.AbstractProxyCollector;
+import com.jiashunx.app.masker.proxypool.core.collector.AbstractMProxyCollector;
 import com.jiashunx.app.masker.proxypool.core.type.MProxySourceType;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @date 2020/09/16
  */
 @Component
-public class JXLProxyCollector extends AbstractProxyCollector {
+public class JXLProxyCollector extends AbstractMProxyCollector {
 
     /**
      * 获取代理数据源类型.

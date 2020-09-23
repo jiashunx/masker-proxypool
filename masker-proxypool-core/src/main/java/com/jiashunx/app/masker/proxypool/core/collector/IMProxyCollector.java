@@ -7,7 +7,7 @@ import com.jiashunx.app.masker.proxypool.core.type.MProxySourceType;
  * @author jiashunx
  * @date 2020/09/16
  */
-public interface IProxyCollector {
+public interface IMProxyCollector {
 
     /**
      * 注册采集器.
