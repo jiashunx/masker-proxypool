@@ -2,6 +2,7 @@ package com.jiashunx.app.masker.proxypool.core.bean;
 
 import com.jiashunx.app.masker.proxypool.core.collector.IMProxyCollector;
 import com.jiashunx.app.masker.proxypool.core.collector.MProxyCollectScheduler;
+import com.jiashunx.app.masker.proxypool.core.exception.MProxyInitializeException;
 import com.jiashunx.app.masker.proxypool.core.util.MDefaultThreadFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ public class MProxyInitializer {
 
     public synchronized void init() {
         if (initialized) {
-            throw new RuntimeException();
+            throw new MProxyInitializeException("masker-proxypool has initialized.");
         }
         initialized = true;
         System.out.println(applicationContext);
