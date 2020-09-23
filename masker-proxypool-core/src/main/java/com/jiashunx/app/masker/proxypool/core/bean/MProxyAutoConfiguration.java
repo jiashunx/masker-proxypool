@@ -1,9 +1,10 @@
 package com.jiashunx.app.masker.proxypool.core.bean;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.Resource;
+import org.springframework.context.event.ContextRefreshedEvent;
 
 /**
  * @author jiashunx
@@ -11,6 +12,13 @@ import javax.annotation.Resource;
  */
 @Configuration
 @ComponentScan("com.jiashunx.app.masker.proxypool.core")
-public class MProxyAutoConfiguration {
+public class MProxyAutoConfiguration implements ApplicationListener<ContextRefreshedEvent> {
 
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        ApplicationContext applicationContext = event.getApplicationContext();
+        if (applicationContext.getParent() == null) {
+            applicationContext.getBean(MProxyInitializer.class).init();
+        }
+    }
 }
