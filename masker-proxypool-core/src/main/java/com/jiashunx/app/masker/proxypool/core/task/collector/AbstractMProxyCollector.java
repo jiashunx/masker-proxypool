@@ -77,10 +77,10 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
      */
     protected static Document getDocument(String url, String referrer, Predicate<Document> predicate) throws MProxyCollectException {
         int failure = 0;
-        for (int retry = 3; failure < retry;) {
-            MProxyType proxyType = null;
+        int retry = 3;
+        while (failure < retry) {
             try {
-                proxyType = url.indexOf("https") == 0 ? MProxyType.HTTPS : MProxyType.HTTP;
+                MProxyType proxyType = url.indexOf("https") == 0 ? MProxyType.HTTPS : MProxyType.HTTP;
                 Document document = get(url, referrer, proxyType);
                 if (predicate.test(document)) {
                     return document;
@@ -89,13 +89,11 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
                 if (logger.isErrorEnabled()) {
                     logger.error("load proxy failed, error reason: {}", e.getMessage());
                 }
-                failure++;
-                if (failure >= retry) {
-                    if (logger.isWarnEnabled()) {
-                        logger.warn("load proxy failed for {} times, retry and use no proxy", failure);
-                    }
-                }
             }
+            failure++;
+        }
+        if (logger.isWarnEnabled()) {
+            logger.warn("load proxy failed for {} times, retry and use no proxy", failure);
         }
         Document document = null;
         try {
