@@ -133,7 +133,9 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
         if (proxyType != null) {
             // 找到可用代理, 使用可用代理进行请求.
             proxy = MProxyPoolHolder.nextProxy(proxyType);
-            configBuilder.setProxy(new HttpHost(proxy.getIp(), proxy.getPort()));
+            if (proxy.isValid()) {
+                configBuilder.setProxy(new HttpHost(proxy.getIp(), proxy.getPort()));
+            }
         }
         if (logger.isInfoEnabled()) {
             logger.info("url: {}, referrer url: {}, use proxy: {}", url, referrer, proxy);
