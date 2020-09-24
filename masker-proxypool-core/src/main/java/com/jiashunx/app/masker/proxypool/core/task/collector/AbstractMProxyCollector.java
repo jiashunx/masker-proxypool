@@ -1,10 +1,8 @@
 package com.jiashunx.app.masker.proxypool.core.task.collector;
 
 import com.jiashunx.app.masker.proxypool.core.agent.MUserAgentHolder;
-import com.jiashunx.app.masker.proxypool.core.bean.MProxyInitializer;
 import com.jiashunx.app.masker.proxypool.core.exception.MProxyCollectException;
 import com.jiashunx.app.masker.proxypool.core.exception.MProxyException;
-import com.jiashunx.app.masker.proxypool.core.exception.MProxyScheduleException;
 import com.jiashunx.app.masker.proxypool.core.model.MProxy;
 import com.jiashunx.app.masker.proxypool.core.util.MProxyPoolHolder;
 import com.jiashunx.app.masker.proxypool.core.task.IMProxyCollector;
@@ -38,11 +36,6 @@ import java.util.function.Predicate;
 public abstract class AbstractMProxyCollector implements IMProxyCollector<List<MProxy>> {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractMProxyCollector.class);
-
-    /**
-     * 采集失败次数.
-     */
-    private static final ThreadLocal<Integer> proxyFailures = ThreadLocal.withInitial(() -> 0);
 
     /**
      * 各线程HttpGet对象复用, 减少GC.
@@ -83,8 +76,8 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
      * 获取url请求数据并使用Jsoup解析.
      */
     protected static Document getDocument(String url, String referrer, Predicate<Document> predicate) throws MProxyCollectException {
-        proxyFailures.set(0);
-        for (int retry = 3, failure = proxyFailures.get(); failure < retry;) {
+        int failure = 0;
+        for (int retry = 3; failure < retry;) {
             MProxyType proxyType = null;
             try {
                 proxyType = url.indexOf("https") == 0 ? MProxyType.HTTPS : MProxyType.HTTP;
@@ -96,8 +89,7 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
                 if (logger.isErrorEnabled()) {
                     logger.error("load proxy failed, error reason: {}", e.getMessage());
                 }
-            } finally {
-                proxyFailures.set(++failure);
+                failure++;
                 if (failure >= retry) {
                     if (logger.isWarnEnabled()) {
                         logger.warn("load proxy failed for {} times, retry and use no proxy", failure);
