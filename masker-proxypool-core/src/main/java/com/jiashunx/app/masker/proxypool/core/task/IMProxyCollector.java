@@ -1,18 +1,15 @@
-package com.jiashunx.app.masker.proxypool.core.collector;
+package com.jiashunx.app.masker.proxypool.core.task;
 
 import com.jiashunx.app.masker.proxypool.core.type.MProxySourceType;
+
+import java.util.concurrent.Callable;
 
 /**
  * 代理采集器接口.
  * @author jiashunx
  * @date 2020/09/16
  */
-public interface IMProxyCollector {
-
-    /**
-     * 注册采集器.
-     */
-    void register();
+public interface IMProxyCollector<T> extends Callable<T> {
 
     /**
      * 获取代理数据源类型.

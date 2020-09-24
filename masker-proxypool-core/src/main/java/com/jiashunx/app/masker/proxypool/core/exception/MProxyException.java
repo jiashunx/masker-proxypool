@@ -1,6 +1,7 @@
 package com.jiashunx.app.masker.proxypool.core.exception;
 
 /**
+ * 异常基类.
  * @author jiashunx
  * @date 2020/09/23
  */
