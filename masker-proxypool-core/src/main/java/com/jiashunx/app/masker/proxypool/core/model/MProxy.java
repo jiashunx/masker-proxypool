@@ -41,6 +41,28 @@ public class MProxy {
      */
     private String isp;
 
+    public MProxy() {}
+
+    public MProxy(MProxySourceType sourceType, MProxyType proxyType, String ip, int port) {
+        this.sourceType = sourceType;
+        this.proxyType = proxyType;
+        this.ip = ip;
+        this.port = port;
+    }
+
+    @Override
+    public String toString() {
+        return "MProxy{" +
+                "sourceType=" + sourceType +
+                ", proxyType=" + proxyType +
+                ", ip='" + ip + '\'' +
+                ", port=" + port +
+                ", country='" + country + '\'' +
+                ", location='" + location + '\'' +
+                ", isp='" + isp + '\'' +
+                '}';
+    }
+
     public MProxySourceType getSourceType() {
         return sourceType;
     }

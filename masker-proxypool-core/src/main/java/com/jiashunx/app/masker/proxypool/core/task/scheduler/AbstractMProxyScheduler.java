@@ -6,6 +6,8 @@ import com.jiashunx.app.masker.proxypool.core.task.IMProxyScheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * 调度抽象类.
  * @author jiashunx
@@ -22,13 +24,16 @@ public abstract class AbstractMProxyScheduler implements IMProxyScheduler {
         }
         String scheduleType = getProxyScheduleType();
         if (logger.isInfoEnabled()) {
-            logger.info("proxy scheduler start, scheduleType: {}", scheduleType);
+            logger.info("proxy scheduler task start, scheduleType: {}", scheduleType);
         }
         try {
             execute();
+            if (logger.isInfoEnabled()) {
+                logger.info("proxy scheduler task finish, scheduleType: {}", scheduleType);
+            }
         } catch (Throwable e) {
             if (logger.isErrorEnabled()) {
-                logger.error("proxy scheduler execute failed, scheduleType: {}", scheduleType, e);
+                logger.error("proxy scheduler task execute failed, scheduleType: {}", scheduleType, e);
             }
         }
     }
@@ -37,6 +42,6 @@ public abstract class AbstractMProxyScheduler implements IMProxyScheduler {
      * 调度执行逻辑.
      * @throws MProxyScheduleException
      */
-    protected abstract void execute() throws MProxyScheduleException;
+    protected abstract void execute() throws MProxyScheduleException, ExecutionException, InterruptedException;
 
 }

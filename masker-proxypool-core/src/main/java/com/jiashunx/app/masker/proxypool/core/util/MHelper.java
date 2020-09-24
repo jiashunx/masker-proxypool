@@ -5,6 +5,8 @@ import com.jiashunx.app.masker.proxypool.core.type.MProxySourceType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author jiashunx
@@ -12,6 +14,8 @@ import java.util.Map;
  */
 public class MHelper {
 
-    public static final Map<MProxySourceType, IMProxyCollector<?>> COLLECTOR_MAP = new HashMap<>();
+    public static ThreadPoolExecutor threadPoolExecutor = null;
+
+    public static ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = null;
 
 }

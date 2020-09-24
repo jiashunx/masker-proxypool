@@ -60,4 +60,7 @@ public class MProxyPool {
         return proxyType;
     }
 
+    public int getPoolSize() {
+        return poolSize;
+    }
 }
