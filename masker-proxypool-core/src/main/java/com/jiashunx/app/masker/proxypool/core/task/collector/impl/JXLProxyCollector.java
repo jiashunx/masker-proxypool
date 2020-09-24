@@ -5,16 +5,19 @@ import com.jiashunx.app.masker.proxypool.core.model.MProxy;
 import com.jiashunx.app.masker.proxypool.core.task.collector.AbstractMProxyCollector;
 import com.jiashunx.app.masker.proxypool.core.type.MProxySourceType;
 import com.jiashunx.app.masker.proxypool.core.type.MProxyType;
+import com.jiashunx.app.masker.proxypool.core.util.MHelper;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.function.Predicate;
 
 /**
  * @author jiashunx
@@ -27,46 +30,66 @@ public class JXLProxyCollector extends AbstractMProxyCollector {
 
     private static final String BASE_URL = "http://ip.jiangxianli.com/?page=";
 
-    @Override
-    protected List<MProxy> get() throws MProxyCollectException {
-        List<MProxy> proxyList = new ArrayList<>();
-        for (int index = 1; index < 5; index++) {
-            String url = BASE_URL + index;
-            Optional.ofNullable(getDocument(url, null)).ifPresent(doc -> {
-                try {
-                    Elements tbodys = doc.select("body > div.layui-layout > div.layui-row > div.ip-tables > div.layui-form > table > tbody");
-                    if (tbodys.isEmpty()) {
-                        return;
-                    }
-                    Element tbody = tbodys.get(0);
-                    Elements trs = tbody.children();
-                    if (trs.isEmpty()) {
-                        return;
-                    }
-                    proxyList.addAll(getProxies(trs));
-                } catch (Exception e) {
-                    if (logger.isErrorEnabled()) {
-                        logger.error("parse proxy failed", e);
+    private static final String ELEMENT_LOCATOR = "body > div.layui-layout > div.layui-row > div.ip-tables > div.layui-form > table > tbody";
+
+    private static class Collector implements Callable<List<MProxy>> {
+        private String url;
+        private Collector(String url) {
+            this.url = url;
+        }
+        @Override
+        public List<MProxy> call() {
+            List<MProxy> proxyList = new LinkedList<>();
+            try {
+                Document document = getDocument(url, null, doc -> {
+                    return doc != null && !doc.select(ELEMENT_LOCATOR).isEmpty();
+                });
+                if (document != null) {
+                    Elements tbodys = document.select(ELEMENT_LOCATOR);
+                    if (!tbodys.isEmpty()) {
+                        Element tbody = tbodys.get(0);
+                        Elements trs = tbody.children();
+                        if (!trs.isEmpty()) {
+                            for (Element tr: trs) {
+                                Elements tds = tr.children();
+                                if (tds.size() != 11) {
+                                    continue;
+                                }
+                                String host = tds.get(0).childNode(0).toString();
+                                int port = Integer.parseInt(tds.get(1).childNode(0).toString());
+                                MProxyType proxyType = MProxyType.valueOf(tds.get(3).childNode(0).toString().toUpperCase());
+                                proxyList.add(new MProxy(null, proxyType, host, port));
+                            }
+                        }
                     }
                 }
-            });
+            } catch (Exception e) {
+                if (logger.isErrorEnabled()) {
+                    logger.error("parse proxy failed", e);
+                }
+            }
+            if (logger.isInfoEnabled()) {
+                logger.info("load proxy from url: {}, count: {}", url, proxyList.size());
+            }
+            return proxyList;
         }
-        return proxyList;
     }
 
-    private List<MProxy> getProxies(Elements trs) {
-        List<MProxy> list = new LinkedList<>();
-        for (Element tr: trs) {
-            Elements tds = tr.children();
-            if (tds.size() != 11) {
-                continue;
-            }
-            String host = tds.get(0).childNode(0).toString();
-            int port = Integer.parseInt(tds.get(1).childNode(0).toString());
-            MProxyType proxyType = MProxyType.valueOf(tds.get(3).childNode(0).toString().toUpperCase());
-            list.add(new MProxy(getProxySourceType(), proxyType, host, port));
+    @Override
+    protected List<MProxy> get() throws MProxyCollectException, ExecutionException, InterruptedException {
+        List<MProxy> proxyList = new ArrayList<>();
+        List<Future<List<MProxy>>> futures = new ArrayList<>();
+        for (int index = 1; index < 10; index++) {
+            String url = BASE_URL + index;
+            futures.add(MHelper.threadPoolExecutor.submit(new Collector(url)));
         }
-        return list;
+        for (Future<List<MProxy>> future: futures) {
+            proxyList.addAll(future.get());
+        }
+        proxyList.forEach(proxy -> {
+            proxy.setSourceType(getProxySourceType());
+        });
+        return proxyList;
     }
 
     /**

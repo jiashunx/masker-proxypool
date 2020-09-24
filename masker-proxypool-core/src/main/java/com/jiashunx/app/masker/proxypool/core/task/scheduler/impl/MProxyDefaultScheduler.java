@@ -48,16 +48,15 @@ public class MProxyDefaultScheduler extends AbstractMProxyScheduler {
         for (Future<List<MProxy>> future: futures) {
             proxyList.addAll(future.get());
         }
+        if (logger.isInfoEnabled()) {
+            logger.info("new proxy count: {}", proxyList.size());
+        }
         Map<MProxyType, List<MProxy>> proxyMap = new HashMap<>();
         proxyList.forEach(proxy -> {
             if (proxy == null || proxy.getProxyType() == null) {
                 return;
             }
-            List<MProxy> list = proxyMap.get(proxy.getProxyType());
-            if (list == null) {
-                list = new ArrayList<>();
-                proxyMap.put(proxy.getProxyType(), list);
-            }
+            List<MProxy> list = proxyMap.computeIfAbsent(proxy.getProxyType(), k -> new ArrayList<>());
             list.add(proxy);
         });
         proxyMap.forEach((proxyType, list) -> {

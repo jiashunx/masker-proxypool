@@ -33,8 +33,8 @@ public class MProxyInitializer {
         }
         initialized = true;
         Map<String, AbstractMProxyCollector> collectorMap = applicationContext.getBeansOfType(AbstractMProxyCollector.class);
-        int poolSize = collectorMap.size();
-        MHelper.threadPoolExecutor = new ThreadPoolExecutor(poolSize, poolSize, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(), new MDefaultThreadFactory());
+        int poolSize = collectorMap.size() * 2 + 1;
+        MHelper.threadPoolExecutor = new ThreadPoolExecutor(poolSize, poolSize, 60L, TimeUnit.SECONDS, new ArrayBlockingQueue<>(500), new MDefaultThreadFactory());
         Map<String, IMProxyScheduler> schedulerMap = applicationContext.getBeansOfType(IMProxyScheduler.class);
         MHelper.scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(schedulerMap.size(), new MDefaultThreadFactory());
         for (Map.Entry<String, IMProxyScheduler> entry: schedulerMap.entrySet()) {

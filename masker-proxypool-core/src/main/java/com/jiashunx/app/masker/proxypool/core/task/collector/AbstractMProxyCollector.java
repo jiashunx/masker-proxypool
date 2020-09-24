@@ -13,6 +13,7 @@ import com.jiashunx.app.masker.proxypool.core.type.MProxyType;
 import com.jiashunx.app.masker.proxypool.core.util.HttpClientUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -26,6 +27,8 @@ import org.springframework.util.StringUtils;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Predicate;
 
 /**
  * 代理采集抽象类.
@@ -51,7 +54,7 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
      * @return
      * @throws MProxyException
      */
-    protected abstract List<MProxy> get() throws MProxyCollectException;
+    protected abstract List<MProxy> get() throws MProxyCollectException, ExecutionException, InterruptedException;
 
     @Override
     public List<MProxy> call() {
@@ -79,13 +82,16 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
     /**
      * 获取url请求数据并使用Jsoup解析.
      */
-    protected Document getDocument(String url, String referrer) throws MProxyCollectException {
+    protected static Document getDocument(String url, String referrer, Predicate<Document> predicate) throws MProxyCollectException {
         proxyFailures.set(0);
         for (int retry = 3, failure = proxyFailures.get(); failure < retry;) {
             MProxyType proxyType = null;
             try {
                 proxyType = url.indexOf("https") == 0 ? MProxyType.HTTPS : MProxyType.HTTP;
-                return get(url, referrer, proxyType);
+                Document document = get(url, referrer, proxyType);
+                if (predicate.test(document)) {
+                    return document;
+                }
             } catch (Exception e) {
                 if (logger.isErrorEnabled()) {
                     logger.error("load proxy failed, error reason: {}", e.getMessage());
@@ -110,11 +116,11 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
         return document;
     }
 
-    private Document get(String url, String referrer, MProxyType proxyType) throws MProxyCollectException {
+    private static Document get(String url, String referrer, MProxyType proxyType) throws MProxyCollectException {
         if (StringUtils.isEmpty(referrer)) {
             referrer = url;
         }
-        String userAgent = (String) MUserAgentHolder.nextUserAgent();
+        String userAgent = MUserAgentHolder.nextUserAgent();
         HttpClientUtil.MaskerHttpClient httpClient = HttpClientUtil.createMaskerHttpClient();
         HttpGet httpGet = localHttpGet.get();
         // 释放连接
@@ -127,15 +133,14 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
         if (proxyType != null) {
             // 找到可用代理, 使用可用代理进行请求.
             proxy = MProxyPoolHolder.nextProxy(proxyType);
-            if (proxy != null) {
-                configBuilder.setProxy(new HttpHost(proxy.getIp(), proxy.getPort()));
-            }
+            configBuilder.setProxy(new HttpHost(proxy.getIp(), proxy.getPort()));
         }
         if (logger.isInfoEnabled()) {
             logger.info("url: {}, referrer url: {}, use proxy: {}", url, referrer, proxy);
         }
         CloseableHttpResponse response = null;
         try {
+            configBuilder.setCookieSpec(CookieSpecs.STANDARD_STRICT);
             httpGet.setConfig(configBuilder.build());
             httpGet.setURI(new URI(url));
             response = httpClient.execute(httpGet);
