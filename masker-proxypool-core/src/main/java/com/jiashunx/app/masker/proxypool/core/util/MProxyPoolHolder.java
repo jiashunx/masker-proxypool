@@ -1,5 +1,7 @@
 package com.jiashunx.app.masker.proxypool.core.util;
 
+import com.jiashunx.app.masker.proxypool.core.bean.MProxyInitializer;
+import com.jiashunx.app.masker.proxypool.core.exception.MProxyScheduleException;
 import com.jiashunx.app.masker.proxypool.core.model.MProxy;
 import com.jiashunx.app.masker.proxypool.core.model.MProxyPool;
 import com.jiashunx.app.masker.proxypool.core.type.MProxyType;
@@ -59,7 +61,14 @@ public class MProxyPoolHolder {
      * 获取指定类型代理.
      */
     public static MProxy nextProxy(MProxyType proxyType) {
-        return getProxyPool(proxyType).nextProxy();
+        if (!MProxyInitializer.isInitialized()) {
+            throw new MProxyScheduleException("masker-proxypool doesn't initialized.");
+        }
+        MProxy proxy = getProxyPool(proxyType).nextProxy();
+        if (proxy == null) {
+            proxy = new MProxy(false);
+        }
+        return proxy;
     }
 
 }

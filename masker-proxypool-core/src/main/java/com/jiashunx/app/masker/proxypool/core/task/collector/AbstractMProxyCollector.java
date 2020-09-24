@@ -55,9 +55,6 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
 
     @Override
     public List<MProxy> call() {
-        if (!MProxyInitializer.isInitialized()) {
-            throw new MProxyScheduleException("masker-proxypool doesn't initialized.");
-        }
         MProxySourceType sourceType = getProxySourceType();
         if (logger.isInfoEnabled()) {
             logger.info("proxy collector task start, proxySourceType: {}", sourceType);

@@ -19,9 +19,6 @@ public abstract class AbstractMProxyScheduler implements IMProxyScheduler {
 
     @Override
     public void run() {
-        if (!MProxyInitializer.isInitialized()) {
-            throw new MProxyScheduleException("masker-proxypool doesn't initialized.");
-        }
         String scheduleType = getProxyScheduleType();
         if (logger.isInfoEnabled()) {
             logger.info("proxy scheduler task start, scheduleType: {}", scheduleType);

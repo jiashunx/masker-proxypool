@@ -29,19 +29,15 @@ public class MProxy {
      */
     private int port;
     /**
-     * 代理所属国.
+     * 是否有效.
      */
-    private String country;
-    /**
-     * 代理位置.
-     */
-    private String location;
-    /**
-     * 代理运营商.
-     */
-    private String isp;
+    private boolean valid = true;
 
     public MProxy() {}
+
+    public MProxy(boolean valid) {
+        this.valid = valid;
+    }
 
     public MProxy(MProxySourceType sourceType, MProxyType proxyType, String ip, int port) {
         this.sourceType = sourceType;
@@ -57,9 +53,7 @@ public class MProxy {
                 ", proxyType=" + proxyType +
                 ", ip='" + ip + '\'' +
                 ", port=" + port +
-                ", country='" + country + '\'' +
-                ", location='" + location + '\'' +
-                ", isp='" + isp + '\'' +
+                ", valid=" + valid +
                 '}';
     }
 
@@ -95,27 +89,11 @@ public class MProxy {
         this.port = port;
     }
 
-    public String getCountry() {
-        return country;
+    public boolean isValid() {
+        return valid;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getIsp() {
-        return isp;
-    }
-
-    public void setIsp(String isp) {
-        this.isp = isp;
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 }
