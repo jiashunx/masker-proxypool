@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @Component
-public @interface Scheduler {
+public @interface MScheduler {
 
     /**
      * 是否开启调度.

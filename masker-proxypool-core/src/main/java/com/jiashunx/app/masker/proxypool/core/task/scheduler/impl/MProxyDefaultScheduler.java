@@ -1,13 +1,13 @@
 package com.jiashunx.app.masker.proxypool.core.task.scheduler.impl;
 
-import com.jiashunx.app.masker.proxypool.core.annotation.Scheduler;
+import com.jiashunx.app.masker.proxypool.core.annotation.MScheduler;
 import com.jiashunx.app.masker.proxypool.core.exception.MProxyScheduleException;
 import com.jiashunx.app.masker.proxypool.core.model.MProxy;
 import com.jiashunx.app.masker.proxypool.core.model.MProxyPool;
 import com.jiashunx.app.masker.proxypool.core.task.collector.AbstractMProxyCollector;
 import com.jiashunx.app.masker.proxypool.core.task.scheduler.AbstractMProxyScheduler;
 import com.jiashunx.app.masker.proxypool.core.type.MProxyType;
-import com.jiashunx.app.masker.proxypool.core.util.MHelper;
+import com.jiashunx.app.masker.proxypool.core.util.MProxyHelper;
 import com.jiashunx.app.masker.proxypool.core.util.MProxyPoolHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ import java.util.concurrent.Future;
  * @author jiashunx
  * @date 2020/09/24
  */
-@Scheduler
+@MScheduler
 public class MProxyDefaultScheduler extends AbstractMProxyScheduler {
 
     private static final Logger logger = LoggerFactory.getLogger(MProxyDefaultScheduler.class);
@@ -39,7 +39,7 @@ public class MProxyDefaultScheduler extends AbstractMProxyScheduler {
         List<Future<List<MProxy>>> futures = new ArrayList<>(collectorMap.size());
         for (Map.Entry<String, AbstractMProxyCollector> entry: collectorMap.entrySet()) {
             AbstractMProxyCollector task = entry.getValue();
-            futures.add(MHelper.threadPoolExecutor.submit(task));
+            futures.add(MProxyHelper.threadPoolExecutor.submit(task));
             if (logger.isInfoEnabled()) {
                 logger.info("submit proxy collector task, proxySourceType: {}", task.getProxySourceType());
             }

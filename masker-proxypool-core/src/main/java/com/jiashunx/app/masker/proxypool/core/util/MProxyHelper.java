@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author jiashunx
  * @date 2020/09/20
  */
-public class MHelper {
+public class MProxyHelper {
 
     public static ThreadPoolExecutor threadPoolExecutor = null;
 

@@ -1,12 +1,10 @@
 package com.jiashunx.app.masker.proxypool.core.bean;
 
-import com.jiashunx.app.masker.proxypool.core.annotation.Scheduler;
-import com.jiashunx.app.masker.proxypool.core.task.IMProxyCollector;
+import com.jiashunx.app.masker.proxypool.core.annotation.MScheduler;
 import com.jiashunx.app.masker.proxypool.core.exception.MProxyInitializeException;
 import com.jiashunx.app.masker.proxypool.core.task.IMProxyScheduler;
-import com.jiashunx.app.masker.proxypool.core.task.collector.AbstractMProxyCollector;
 import com.jiashunx.app.masker.proxypool.core.util.MDefaultThreadFactory;
-import com.jiashunx.app.masker.proxypool.core.util.MHelper;
+import com.jiashunx.app.masker.proxypool.core.util.MProxyHelper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -32,16 +30,16 @@ public class MProxyInitializer {
             throw new MProxyInitializeException("masker-proxypool has initialized.");
         }
         initialized = true;
-        MHelper.threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool(new MDefaultThreadFactory());
+        MProxyHelper.threadPoolExecutor = (ThreadPoolExecutor) Executors.newCachedThreadPool(new MDefaultThreadFactory());
         Map<String, IMProxyScheduler> schedulerMap = applicationContext.getBeansOfType(IMProxyScheduler.class);
-        MHelper.scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(schedulerMap.size(), new MDefaultThreadFactory());
+        MProxyHelper.scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(schedulerMap.size(), new MDefaultThreadFactory());
         for (Map.Entry<String, IMProxyScheduler> entry: schedulerMap.entrySet()) {
             IMProxyScheduler scheduler = entry.getValue();
-            Scheduler annotation = scheduler.getClass().getAnnotation(Scheduler.class);
+            MScheduler annotation = scheduler.getClass().getAnnotation(MScheduler.class);
             if (annotation.fixedDelay()) {
-                MHelper.scheduledThreadPoolExecutor.scheduleWithFixedDelay(scheduler, annotation.initialDelayMillis(), annotation.delayMillis(), TimeUnit.MILLISECONDS);
+                MProxyHelper.scheduledThreadPoolExecutor.scheduleWithFixedDelay(scheduler, annotation.initialDelayMillis(), annotation.delayMillis(), TimeUnit.MILLISECONDS);
             } else {
-                MHelper.scheduledThreadPoolExecutor.scheduleAtFixedRate(scheduler, annotation.initialDelayMillis(), annotation.delayMillis(), TimeUnit.MILLISECONDS);
+                MProxyHelper.scheduledThreadPoolExecutor.scheduleAtFixedRate(scheduler, annotation.initialDelayMillis(), annotation.delayMillis(), TimeUnit.MILLISECONDS);
             }
         }
     }

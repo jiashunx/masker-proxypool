@@ -5,7 +5,7 @@ import com.jiashunx.app.masker.proxypool.core.model.MProxy;
 import com.jiashunx.app.masker.proxypool.core.task.collector.AbstractMProxyCollector;
 import com.jiashunx.app.masker.proxypool.core.type.MProxySourceType;
 import com.jiashunx.app.masker.proxypool.core.type.MProxyType;
-import com.jiashunx.app.masker.proxypool.core.util.MHelper;
+import com.jiashunx.app.masker.proxypool.core.util.MProxyHelper;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -17,7 +17,6 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.function.Predicate;
 
 /**
  * @author jiashunx
@@ -81,7 +80,7 @@ public class JXLProxyCollector extends AbstractMProxyCollector {
         List<Future<List<MProxy>>> futures = new ArrayList<>();
         for (int index = 1; index < 10; index++) {
             String url = BASE_URL + index;
-            futures.add(MHelper.threadPoolExecutor.submit(new Collector(url)));
+            futures.add(MProxyHelper.threadPoolExecutor.submit(new Collector(url)));
         }
         for (Future<List<MProxy>> future: futures) {
             proxyList.addAll(future.get());

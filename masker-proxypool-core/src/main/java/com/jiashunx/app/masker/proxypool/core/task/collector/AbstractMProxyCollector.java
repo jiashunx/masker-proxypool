@@ -8,7 +8,7 @@ import com.jiashunx.app.masker.proxypool.core.util.MProxyPoolHolder;
 import com.jiashunx.app.masker.proxypool.core.task.IMProxyCollector;
 import com.jiashunx.app.masker.proxypool.core.type.MProxySourceType;
 import com.jiashunx.app.masker.proxypool.core.type.MProxyType;
-import com.jiashunx.app.masker.proxypool.core.util.HttpClientUtil;
+import com.jiashunx.app.masker.proxypool.core.util.MHttpClientUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.CookieSpecs;
@@ -113,7 +113,7 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
             referrer = url;
         }
         String userAgent = MUserAgentHolder.nextUserAgent();
-        HttpClientUtil.MaskerHttpClient httpClient = HttpClientUtil.createMaskerHttpClient();
+        MHttpClientUtil.MaskerHttpClient httpClient = MHttpClientUtil.createMaskerHttpClient();
         HttpGet httpGet = localHttpGet.get();
         // 释放连接
         httpGet.releaseConnection();

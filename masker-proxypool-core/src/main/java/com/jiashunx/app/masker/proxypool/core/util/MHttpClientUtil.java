@@ -28,9 +28,9 @@ import java.security.NoSuchAlgorithmException;
  * @author jiashunx
  * @date 2020/09/24
  */
-public class HttpClientUtil {
+public class MHttpClientUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(MHttpClientUtil.class);
 
     private static SSLContext sslContext = null;
     static {
