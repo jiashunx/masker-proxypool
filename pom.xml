@@ -4,7 +4,7 @@
   <artifactId>masker-proxypool</artifactId>
   <name>masker-proxypool</name>
   <packaging>pom</packaging>
-  <version>0.0.1-SNASHOT</version>
+  <version>1.0.0</version>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -16,4 +16,11 @@
     <module>masker-proxypool-core</module>
     <module>masker-proxypool-demo</module>
   </modules>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub OWNER Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/jiashunx/mvn-repo</url>
+    </repository>
+  </distributionManagement>
 </project>

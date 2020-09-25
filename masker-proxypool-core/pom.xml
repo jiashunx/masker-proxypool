@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.jiashunx.app</groupId>
     <artifactId>masker-proxypool</artifactId>
-    <version>0.0.1-SNASHOT</version>
+    <version>1.0.0</version>
   </parent>
   <artifactId>masker-proxypool-core</artifactId>
   <dependencies>
