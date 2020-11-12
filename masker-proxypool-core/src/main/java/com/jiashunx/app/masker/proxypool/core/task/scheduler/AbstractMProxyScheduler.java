@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutionException;
 /**
  * 调度抽象类.
  * @author jiashunx
- * @date 2020/09/24
  */
 public abstract class AbstractMProxyScheduler implements IMProxyScheduler {
 
@@ -37,7 +36,9 @@ public abstract class AbstractMProxyScheduler implements IMProxyScheduler {
 
     /**
      * 调度执行逻辑.
-     * @throws MProxyScheduleException
+     * @throws MProxyScheduleException MProxyScheduleException
+     * @throws ExecutionException ExecutionException
+     * @throws InterruptedException InterruptedException
      */
     protected abstract void execute() throws MProxyScheduleException, ExecutionException, InterruptedException;
 

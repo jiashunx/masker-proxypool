@@ -15,7 +15,6 @@ import java.util.concurrent.*;
 /**
  * 初始化类.
  * @author jiashunx
- * @date 2020/09/23
  */
 @Component
 public class MProxyInitializer {
@@ -44,6 +43,9 @@ public class MProxyInitializer {
         }
     }
 
+    /**
+     * @return boolean
+     */
     public static synchronized boolean isInitialized() {
         return initialized;
     }

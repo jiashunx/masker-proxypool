@@ -31,7 +31,6 @@ import java.util.function.Predicate;
 /**
  * 代理采集抽象类.
  * @author jiashunx
- * @date 2020/09/16
  */
 public abstract class AbstractMProxyCollector implements IMProxyCollector<List<MProxy>> {
 
@@ -44,8 +43,10 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
 
     /**
      * 代理采集返回结果.
-     * @return
-     * @throws MProxyException
+     * @return List
+     * @throws MProxyCollectException MProxyCollectException
+     * @throws ExecutionException ExecutionException
+     * @throws InterruptedException InterruptedException
      */
     protected abstract List<MProxy> get() throws MProxyCollectException, ExecutionException, InterruptedException;
 
@@ -74,6 +75,10 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
 
     /**
      * 获取url请求数据并使用Jsoup解析.
+     * @param url url
+     * @param referrer referrer
+     * @param predicate predicate
+     * @return Document
      */
     protected static Document getDocument(String url, String referrer, Predicate<Document> predicate) throws MProxyCollectException {
         int failure = 0;

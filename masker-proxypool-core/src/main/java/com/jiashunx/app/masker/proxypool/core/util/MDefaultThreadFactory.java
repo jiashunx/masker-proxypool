@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * 自定义线程工厂类.
  * @author jiashunx
- * @date 2020/09/20
  */
 public class MDefaultThreadFactory implements ThreadFactory {
 

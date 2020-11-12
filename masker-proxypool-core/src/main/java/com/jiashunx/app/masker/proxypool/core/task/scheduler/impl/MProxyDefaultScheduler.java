@@ -23,7 +23,6 @@ import java.util.concurrent.Future;
 
 /**
  * @author jiashunx
- * @date 2020/09/24
  */
 @MScheduler
 public class MProxyDefaultScheduler extends AbstractMProxyScheduler {

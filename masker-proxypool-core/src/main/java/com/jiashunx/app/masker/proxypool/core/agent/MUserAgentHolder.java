@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * User-Agent持有对象.
  * @author jiashunx
- * @date 2020/09/15
  */
 public class MUserAgentHolder {
 

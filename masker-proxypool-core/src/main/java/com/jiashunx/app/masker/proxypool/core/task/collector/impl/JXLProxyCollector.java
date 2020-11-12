@@ -20,7 +20,6 @@ import java.util.concurrent.Future;
 
 /**
  * @author jiashunx
- * @date 2020/09/16
  */
 @Component
 public class JXLProxyCollector extends AbstractMProxyCollector {

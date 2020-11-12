@@ -8,16 +8,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author jiashunx
- * @date 2020/09/24
  */
 @RestController
 public class MaskerProxyController {
 
+    /**
+     * @return MProxy
+     */
     @GetMapping("/proxy/http")
     public MProxy getHttpProxy() {
         return MProxyPoolHolder.nextProxy(MProxyType.HTTP);
     }
 
+    /**
+     * @return MProxy
+     */
     @GetMapping("/proxy/https")
     public MProxy getHttpsProxy() {
         return MProxyPoolHolder.nextProxy(MProxyType.HTTPS);

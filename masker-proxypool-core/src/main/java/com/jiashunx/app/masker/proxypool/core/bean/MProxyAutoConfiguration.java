@@ -8,7 +8,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 /**
  * @author jiashunx
- * @date 2020/09/23
  */
 @Configuration
 @ComponentScan("com.jiashunx.app.masker.proxypool.core")

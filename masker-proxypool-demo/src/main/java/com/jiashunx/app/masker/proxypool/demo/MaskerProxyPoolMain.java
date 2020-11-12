@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * 启动类
  * @author jiashunx
- * @date 2020/09/15
  */
 @SpringBootApplication
 public class MaskerProxyPoolMain {

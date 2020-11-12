@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * 代理池(代理池对象创建时固定).
  * @author jiashunx
- * @date 2020/09/16
  */
 public class MProxyPool {
 
@@ -46,6 +45,7 @@ public class MProxyPool {
 
     /**
      * 获取代理.
+     * @return MProxy
      */
     public MProxy nextProxy() {
         if (poolSize <= 0) {
@@ -56,10 +56,16 @@ public class MProxyPool {
         return proxyList.get(index);
     }
 
+    /**
+     * @return MProxyType
+     */
     public MProxyType getProxyType() {
         return proxyType;
     }
 
+    /**
+     * @return int
+     */
     public int getPoolSize() {
         return poolSize;
     }

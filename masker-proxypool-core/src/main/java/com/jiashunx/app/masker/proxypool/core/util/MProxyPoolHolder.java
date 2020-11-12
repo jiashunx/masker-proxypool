@@ -14,7 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 代理池持有对象
  * @author jiashunx
- * @date 2020/09/24
  */
 public class MProxyPoolHolder {
 
@@ -33,6 +32,8 @@ public class MProxyPoolHolder {
 
     /**
      * 获取指定类型代理池.
+     * @param proxyType proxyType
+     * @return MProxyPool
      */
     public static MProxyPool getProxyPool(MProxyType proxyType) {
         if (proxyType == null) {
@@ -43,6 +44,8 @@ public class MProxyPoolHolder {
 
     /**
      * 更新指定类型代理池.
+     * @param proxyType proxyType
+     * @param proxyPool proxyPool
      */
     public static void setProxyPool(MProxyType proxyType, MProxyPool proxyPool) {
         if (proxyType == null || proxyPool == null) {
@@ -59,6 +62,8 @@ public class MProxyPoolHolder {
 
     /**
      * 获取指定类型代理.
+     * @param proxyType proxyType
+     * @return MProxy
      */
     public static MProxy nextProxy(MProxyType proxyType) {
         if (!MProxyInitializer.isInitialized()) {

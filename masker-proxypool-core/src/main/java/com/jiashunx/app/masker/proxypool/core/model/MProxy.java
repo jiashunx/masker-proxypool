@@ -8,7 +8,6 @@ import java.util.Objects;
 /**
  * 代理模型.
  * @author jiashunx
- * @date 2020/09/16
  */
 public class MProxy {
 

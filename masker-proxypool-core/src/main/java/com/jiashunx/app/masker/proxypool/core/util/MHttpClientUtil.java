@@ -26,7 +26,6 @@ import java.security.NoSuchAlgorithmException;
  * 而CloseableHttpClient对象close时同时需要释放其连接池管理器.<br>
  * 因此自定义MaskerHttpClient来进行统一的http连接释放.
  * @author jiashunx
- * @date 2020/09/24
  */
 public class MHttpClientUtil {
 

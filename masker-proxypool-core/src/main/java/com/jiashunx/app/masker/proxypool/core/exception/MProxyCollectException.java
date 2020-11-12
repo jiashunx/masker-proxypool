@@ -3,7 +3,6 @@ package com.jiashunx.app.masker.proxypool.core.exception;
 /**
  * 代理采集异常.
  * @author jiashunx
- * @date 2020/09/23
  */
 public class MProxyCollectException extends MProxyException {
 
