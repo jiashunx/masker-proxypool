@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.jiashunx.app</groupId>
+    <groupId>io.github.jiashunx</groupId>
     <artifactId>masker-proxypool</artifactId>
     <version>1.0.1</version>
   </parent>
@@ -9,7 +9,7 @@
   <name>masker-proxypool-demo</name>
   <dependencies>
     <dependency>
-      <groupId>com.jiashunx.app</groupId>
+      <groupId>io.github.jiashunx</groupId>
       <artifactId>masker-proxypool-core</artifactId>
       <version>${version}</version>
     </dependency>
