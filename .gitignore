@@ -1,0 +1,17 @@
+
+**/build/
+**/dist/
+**/node_modules/
+**/bin/
+**/target/
+**/.settings/
+**/.classpath
+**/.project
+**/logs
+**/*.log
+**/*.class
+**/*.class_js
+**/.idea/
+**/*.iml
+
+
