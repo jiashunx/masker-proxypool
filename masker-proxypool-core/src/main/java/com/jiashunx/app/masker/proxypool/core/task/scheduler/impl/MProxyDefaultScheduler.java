@@ -31,7 +31,7 @@ public class MProxyDefaultScheduler extends AbstractMProxyScheduler {
 
     /**
      * 获取采集器.
-     * @return Map<String, AbstractMProxyCollector>
+     * @return Map
      */
     protected Map<String, AbstractMProxyCollector> getBeansOfMProxyCollector() {
         Map<String, AbstractMProxyCollector> beans = new HashMap<>();
