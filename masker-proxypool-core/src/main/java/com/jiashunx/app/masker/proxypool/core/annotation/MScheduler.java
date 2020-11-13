@@ -1,7 +1,5 @@
 package com.jiashunx.app.masker.proxypool.core.annotation;
 
-import org.springframework.stereotype.Component;
-
 import java.lang.annotation.*;
 
 /**
@@ -11,7 +9,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Component
 public @interface MScheduler {
 
     /**

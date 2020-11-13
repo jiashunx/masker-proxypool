@@ -3,7 +3,7 @@
   <parent>
     <groupId>io.github.jiashunx</groupId>
     <artifactId>masker-proxypool</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
   </parent>
   <artifactId>masker-proxypool-core</artifactId>
   <dependencies>
@@ -16,11 +16,6 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.25</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>5.0.7.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>

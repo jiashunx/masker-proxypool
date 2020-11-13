@@ -5,21 +5,21 @@ import com.jiashunx.app.masker.proxypool.core.exception.MProxyScheduleException;
 import com.jiashunx.app.masker.proxypool.core.model.MProxy;
 import com.jiashunx.app.masker.proxypool.core.model.MProxyPool;
 import com.jiashunx.app.masker.proxypool.core.task.collector.AbstractMProxyCollector;
+import com.jiashunx.app.masker.proxypool.core.task.collector.impl.JXLProxyCollector;
 import com.jiashunx.app.masker.proxypool.core.task.scheduler.AbstractMProxyScheduler;
 import com.jiashunx.app.masker.proxypool.core.type.MProxyType;
 import com.jiashunx.app.masker.proxypool.core.util.MProxyHelper;
 import com.jiashunx.app.masker.proxypool.core.util.MProxyPoolHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author jiashunx
@@ -29,16 +29,31 @@ public class MProxyDefaultScheduler extends AbstractMProxyScheduler {
 
     private static final Logger logger = LoggerFactory.getLogger(MProxyDefaultScheduler.class);
 
-    @Resource
-    private ApplicationContext applicationContext;
+    /**
+     * 获取采集器.
+     * @return Map<String, AbstractMProxyCollector>
+     */
+    protected Map<String, AbstractMProxyCollector> getBeansOfMProxyCollector() {
+        Map<String, AbstractMProxyCollector> beans = new HashMap<>();
+        beans.put("jXLProxyCollector", new JXLProxyCollector());
+        return beans;
+    }
+
+    /**
+     * 获取异步任务执行线程池.
+     * @return ThreadPoolExecutor
+     */
+    protected ThreadPoolExecutor getThreadPoolExecutor() {
+        return MProxyHelper.threadPoolExecutor;
+    }
 
     @Override
     protected void execute() throws MProxyScheduleException, ExecutionException, InterruptedException {
-        Map<String, AbstractMProxyCollector> collectorMap = applicationContext.getBeansOfType(AbstractMProxyCollector.class);
+        Map<String, AbstractMProxyCollector> collectorMap = getBeansOfMProxyCollector();
         List<Future<List<MProxy>>> futures = new ArrayList<>(collectorMap.size());
         for (Map.Entry<String, AbstractMProxyCollector> entry: collectorMap.entrySet()) {
             AbstractMProxyCollector task = entry.getValue();
-            futures.add(MProxyHelper.threadPoolExecutor.submit(task));
+            futures.add(getThreadPoolExecutor().submit(task));
             if (logger.isInfoEnabled()) {
                 logger.info("submit proxy collector task, proxySourceType: {}", task.getProxySourceType());
             }

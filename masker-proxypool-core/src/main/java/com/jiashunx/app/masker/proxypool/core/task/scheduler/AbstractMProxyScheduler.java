@@ -1,6 +1,5 @@
 package com.jiashunx.app.masker.proxypool.core.task.scheduler;
 
-import com.jiashunx.app.masker.proxypool.core.bean.MProxyInitializer;
 import com.jiashunx.app.masker.proxypool.core.exception.MProxyScheduleException;
 import com.jiashunx.app.masker.proxypool.core.task.IMProxyScheduler;
 import org.slf4j.Logger;

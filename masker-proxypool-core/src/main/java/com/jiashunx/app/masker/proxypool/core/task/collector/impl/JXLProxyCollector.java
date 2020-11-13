@@ -11,7 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -21,7 +20,6 @@ import java.util.concurrent.Future;
 /**
  * @author jiashunx
  */
-@Component
 public class JXLProxyCollector extends AbstractMProxyCollector {
 
     private static final Logger logger = LoggerFactory.getLogger(JXLProxyCollector.class);

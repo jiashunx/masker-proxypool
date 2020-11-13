@@ -1,29 +1,48 @@
 ### masker-proxypool
 
-- masker-proxypool-core: 代理池核心包，引入之后即可调用API获取代理
-- masker-proxypool-demo：代理池demo，依赖masker-proxypool-core，发布Rest接口获取代理
+   - 项目简介：代理池API
 
-#### 项目直接作为基础组件集成到SpringBoot项目即可，代理采集自动扫描并启动
+   - 工程介绍：
 
-#### 如何引用：
-```
-项目pom.xml添加jiashunx/mvn-repo的repository配置
-<repositories>
-  <repository>
-    <id>github</id>
-    <name>GitHub jiashunx Apache Maven Packages</name>
-    <url>https://maven.pkg.github.com/jiashunx/mvn-repo</url>
-  </repository>
-</repositories>
-项目pom.xml文件添加依赖
-<dependency>
-  <groupId>com.jiashunx.app</groupId>
-  <artifactId>masker-proxypool-core</artifactId>
-  <version>1.0.0</version>
-</dependency> 
-```
+      - masker-proxypool-core：代理池API核心包，引入到工程之后手工启动代理池即可调用相应API获取代理配置
+      - masker-proxypool-starter：作为spring boot starter依赖加入到spring boot项目，添加依赖即可使用，无需手工启动代理池
+      - masker-proxypool-demo：代理池demo（spring boot实现），依赖masker-proxypool-starter，发布rest接口获取代理
 
-#### 如何调用：
-```
-com.jiashunx.app.masker.proxypool.core.util.MProxyPoolHolder.nextProxy(com.jiashunx.app.masker.proxypool.core.type.MProxyType)
-```
+      ```text
+      GET /proxy/http    获取http代理
+      GET /proxy/https   获取https代理
+      ```
+   
+   - 环境依赖：
+
+      - JDK8+
+   
+   - 部署步骤：
+
+      - 方式一：引入masker-proxypool-core依赖，然后手工启动代理池，然后调用相应API获取代理
+
+      ```text
+      1、引入依赖：
+      <dependency>
+        <groupId>io.github.jiashunx</groupId>
+        <artifactId>masker-proxypool-core</artifactId>
+        <version>1.1.0</version>
+      </dependency>
+      2、手工启动代理池：
+      com.jiashunx.app.masker.proxypool.core.util.MProxyInitializer.init();
+      3、调用API获取代理：
+      com.jiashunx.app.masker.proxypool.core.util.MProxyPoolHolder.nextHttpProxy()
+      ```
+
+      - 方式二：spring boot工程引入masker-proxypool-starter依赖，然后调用相应API获取代理
+
+      ```text
+      1、引入依赖：
+      <dependency>
+        <groupId>io.github.jiashunx</groupId>
+        <artifactId>masker-proxypool-starter</artifactId>
+        <version>1.1.0</version>
+      </dependency>
+      2、调用API获取代理：
+      com.jiashunx.app.masker.proxypool.core.util.MProxyPoolHolder.nextHttpProxy()
+      ```

@@ -20,7 +20,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -112,7 +111,7 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
     }
 
     private static Document get(String url, String referrer, MProxyType proxyType) throws MProxyCollectException {
-        if (StringUtils.isEmpty(referrer)) {
+        if (referrer == null || referrer.isEmpty()) {
             referrer = url;
         }
         String userAgent = MUserAgentHolder.nextUserAgent();
@@ -120,7 +119,7 @@ public abstract class AbstractMProxyCollector implements IMProxyCollector<List<M
         HttpGet httpGet = localHttpGet.get();
         // 释放连接
         httpGet.releaseConnection();
-        if (!StringUtils.isEmpty(userAgent)) {
+        if (!(userAgent == null || userAgent.isEmpty())) {
             httpGet.setHeader("User-Agent", userAgent);
         }
         RequestConfig.Builder configBuilder = RequestConfig.custom().setConnectionRequestTimeout(3000).setSocketTimeout(3000);

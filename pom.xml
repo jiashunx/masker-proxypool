@@ -4,7 +4,7 @@
   <artifactId>masker-proxypool</artifactId>
   <name>masker-proxypool</name>
   <packaging>pom</packaging>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -39,6 +39,7 @@
   </developers>
   <modules>
     <module>masker-proxypool-core</module>
+    <module>masker-proxypool-starter</module>
     <module>masker-proxypool-demo</module>
   </modules>
   <distributionManagement>

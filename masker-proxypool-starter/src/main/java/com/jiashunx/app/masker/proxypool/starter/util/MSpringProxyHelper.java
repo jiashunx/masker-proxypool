@@ -1,4 +1,4 @@
-package com.jiashunx.app.masker.proxypool.core.util;
+package com.jiashunx.app.masker.proxypool.starter.util;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * @author jiashunx
  */
-public class MProxyHelper {
+public class MSpringProxyHelper {
 
     public static ThreadPoolExecutor threadPoolExecutor = null;
 
