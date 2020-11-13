@@ -29,9 +29,9 @@
         <version>1.1.0</version>
       </dependency>
       2、手工启动代理池：
-      com.jiashunx.app.masker.proxypool.core.util.MProxyInitializer.init();
+      io.github.jiashunx.masker.proxypool.core.utils.MProxyInitializer.init();
       3、调用API获取代理：
-      com.jiashunx.app.masker.proxypool.core.util.MProxyPoolHolder.nextHttpProxy()
+      io.github.jiashunx.masker.proxypool.core.utils.MProxyPoolHolder.nextHttpProxy()
       ```
 
       - 方式二：spring boot工程引入masker-proxypool-starter依赖，然后调用相应API获取代理
@@ -44,5 +44,5 @@
         <version>1.1.0</version>
       </dependency>
       2、调用API获取代理：
-      com.jiashunx.app.masker.proxypool.core.util.MProxyPoolHolder.nextHttpProxy()
+      io.github.jiashunx.masker.proxypool.core.utils.MProxyPoolHolder.nextHttpProxy()
       ```

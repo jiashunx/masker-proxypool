@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.jiashunx.app.masker.proxypool.starter.MProxyAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.github.jiashunx.masker.proxypool.starter.MProxyAutoConfiguration
