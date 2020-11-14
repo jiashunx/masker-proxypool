@@ -3,7 +3,7 @@
   <parent>
     <groupId>io.github.jiashunx</groupId>
     <artifactId>masker-proxypool</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
   </parent>
   <artifactId>masker-proxypool-core</artifactId>
   <dependencies>
@@ -55,7 +55,7 @@
               <Bundle-SymbolicName>masker-proxypool-core</Bundle-SymbolicName>
               <Bundle-Version>${version}</Bundle-Version>
               <Bundle-RequiredExecutionEnvironment>J2SE-${jdk.compiler.version}</Bundle-RequiredExecutionEnvironment>
-              <Bundle-Vendor>JIASHUNX</Bundle-Vendor>
+              <Bundle-Vendor>io.github.jiashunx</Bundle-Vendor>
               <Built-By>Administrator</Built-By>
             </manifestEntries>
           </archive>

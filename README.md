@@ -26,7 +26,7 @@
       <dependency>
         <groupId>io.github.jiashunx</groupId>
         <artifactId>masker-proxypool-core</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2</version>
       </dependency>
       2、手工启动代理池：
       io.github.jiashunx.masker.proxypool.core.utils.MProxyInitializer.init();
@@ -41,7 +41,7 @@
       <dependency>
         <groupId>io.github.jiashunx</groupId>
         <artifactId>masker-proxypool-starter</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2</version>
       </dependency>
       2、调用API获取代理：
       io.github.jiashunx.masker.proxypool.core.utils.MProxyPoolHolder.nextHttpProxy()

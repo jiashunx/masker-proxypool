@@ -3,7 +3,7 @@
     <parent>
         <groupId>io.github.jiashunx</groupId>
         <artifactId>masker-proxypool</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2</version>
     </parent>
     <artifactId>masker-proxypool-starter</artifactId>
     <name>masker-proxypool-starter</name>
@@ -28,6 +28,23 @@
                 <configuration>
                     <source>${jdk.compiler.version}</source>
                     <target>${jdk.compiler.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Manifest-Version>1.0</Manifest-Version>
+                            <Bundle-Name>masker-proxypool-starter</Bundle-Name>
+                            <Bundle-SymbolicName>masker-proxypool-starter</Bundle-SymbolicName>
+                            <Bundle-Version>${version}</Bundle-Version>
+                            <Bundle-RequiredExecutionEnvironment>J2SE-${jdk.compiler.version}</Bundle-RequiredExecutionEnvironment>
+                            <Bundle-Vendor>io.github.jiashunx</Bundle-Vendor>
+                            <Built-By>Administrator</Built-By>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
